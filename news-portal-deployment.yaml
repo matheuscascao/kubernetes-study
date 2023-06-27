@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-portal-deployment
+spec:
+  template:
+    metadata:
+      labels:
+        app: news-portal-deployment
+    spec:
+      containers:
+      - name: news-portal-deployment
+        image: aluracursos/portal-noticias:1
+        ports:
+        - containerPort: 80
+  replicas: 4
+  selector:
+    matchLabels:
+      app: news-portal-deployment

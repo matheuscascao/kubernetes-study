@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-volume-persistent-testing
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      volumeMounts:
+        - name: persistent-volume
+          mountPath: /cache-inside-container
+  volumes:
+    - name: persistent-volume
+      persistentVolumeClaim:
+        claimName: persistent-volume
