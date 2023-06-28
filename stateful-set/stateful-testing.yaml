@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stateful-testing
+spec:
+  replicas: 3
+  serviceName: "svc-stateful-testing"
+  template:
+    metadata:
+      name: stateful-testing
+      labels:
+        app: stateful-testing
+    spec:
+      containers:
+        - name: nginx-stateful-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: stateful-testing-volume
+              mountPath: /TESTE-STORAGE
+      volumes:
+      - name: stateful-testing-volume
+        persistentVolumeClaim:
+          claimName: pvc-stateful-testing
+  selector:
+    matchLabels:
+      app: stateful-testing
