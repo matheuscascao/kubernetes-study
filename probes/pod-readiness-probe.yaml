@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: liveness-probe-testing
+spec:
+  containers:
+  - name: liveness-probe-testing-container
+    image: registry.k8s.io/busybox
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 30; rm -rf /tmp/healthy; sleep 600
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healty
+      initialDelaySeconds: 5 #liveness probe initial test will be executed after 5 seconds
+      periodSeconds: 5 #liveness probe will be executed every 5 seconds
+      failureThreshold: 3
+    readinessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+
+# same syntax as readiness probes.
